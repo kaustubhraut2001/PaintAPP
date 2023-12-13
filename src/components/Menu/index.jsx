@@ -15,7 +15,11 @@ const Menu = () => {
 	const handlemenuclick = (menuitem) => {
 		dispatch(menuItemClick(menuitem))
 	}
-	const activemenuitemm = useSelector((state)=>state.menu.activeMenuItem)
+	const activemenuitemm = useSelector((state)=>state.menu.activeMenuItem);
+	const handelactionitem = (itemname)=>{
+		dispatch(actionitemcliick(itemname))
+
+	}
 
   return (
 	<div className={styles.menucomponent}>
@@ -38,7 +42,7 @@ const Menu = () => {
 
 
 	<div  className= {cx(styles.iconWrapper ?  [styles.active] :activemenuitemm === MENU_ITEMS.UNDO )} onClick={()=>{
-		handlemenuclick(MENU_ITEMS.UNDO)
+		handelactionitem(MENU_ITEMS.UNDO)
 	}}>
 	<FontAwesomeIcon icon={faRotateLeft} className={styles.icon}
 	/>
@@ -47,7 +51,7 @@ const Menu = () => {
 
 
 	<div className= {cx(styles.iconWrapper ?  [styles.active] :activemenuitemm === MENU_ITEMS.REDO )} onClick={()=>{
-		handlemenuclick(MENU_ITEMS.REDO)
+		handelactionitem(MENU_ITEMS.REDO)
 	}}>
 	<FontAwesomeIcon icon={faRotateRight} className={styles.icon}
 	/>
@@ -56,7 +60,7 @@ const Menu = () => {
 
 
 	<div  className= {cx(styles.iconWrapper ?  [styles.active] :activemenuitemm === MENU_ITEMS.DOWNLOAD )} onClick={()=>{
-		handlemenuclick(MENU_ITEMS.DOWNLOAD	)
+		handelactionitem(MENU_ITEMS.DOWNLOAD	)
 	}}>
 	<FontAwesomeIcon icon={faFileArrowDown} className={styles.icon}
 	 />

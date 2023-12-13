@@ -65,8 +65,7 @@ const Toolbox = () => {
             max={50}
             step={1}
             onChange={updateburshsize}
-            name=""
-            id=""
+
             value={size}
           />
         </div>
