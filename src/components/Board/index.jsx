@@ -49,7 +49,7 @@ function Board() {
 
     //   const imagedata = history.current[histrypointer.current];
     //   context.putImageData(imagedata, 0, 0);
-	if (histrypointer.current >= 0 && history.current.length > 0) {
+	if (histrypointer.current > 0 && history.current.length > 0) {
 		histrypointer.current = histrypointer.current - 1;
 		const imagedata = history.current[histrypointer.current];
 		context.putImageData(imagedata, 0, 0);
