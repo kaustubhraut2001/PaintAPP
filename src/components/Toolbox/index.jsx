@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./index.module.css";
 import {changeBrushSize , changecolor} from "../../Redux/Slice/Toolboxslice"
 import cx from "classnames";
-
+import {socket} from "../../Socket"
 import {COLORS, MENU_ITEMS} from "../../constants"
 import { useSelector , useDispatch } from "react-redux";
 const Toolbox = () => {
@@ -13,14 +13,17 @@ const Toolbox = () => {
 
   const activemenuitemm = useSelector((state)=>state.menu.activeMenuItem);
 	const {color , size } = useSelector((state)=>state.toolkit[activemenuitemm]);
+
   const updateburshsize = (e) => {
     console.log(e.target.value);
     dispatch(changeBrushSize({item : activemenuitem , size : e.target.value}));
+    socket.emit("changeconfig" , {color , size : e.target.value});
 
   };
 
   const updatecolor = (newcolor) => {
     dispatch(changecolor({item : activemenuitem , color : newcolor}));
+    socket.emit("changeconfig" , {color : newcolor , size});
   }
 
 
