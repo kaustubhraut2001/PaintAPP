@@ -110,8 +110,8 @@ function Board() {
     };
     const mousedownfn = (e) => {
       shouddraw.current = true;
-      beginPath(e.clientX, e.clientY);
-      socket.emit("beginpath", { x: e.clientX, y: e.clientY });
+      beginPath(e.clientX || e.touches[0].clientX   , e.clientY || e.touches[0].clientY);
+      socket.emit("beginpath", { x: e.clientX || e.touches[0].clientX  , y: e.clientY || e.touches[0].clientY });
 
       // socket.emit('beginpath' , {x:e.clientX , y:e.clientY});
     };
@@ -132,8 +132,8 @@ function Board() {
       if (!shouddraw.current) {
         return;
       }
-      drawPath(e.clientX, e.clientY);
-      socket.emit("drawpath", { x: e.clientX, y: e.clientY });
+      drawPath(e.clientX ||  e.touches[0].clientX  , e.clientY || e.touches[0].clientY);
+      socket.emit("drawpath", { x: e.clientX ||  e.touches[0].clientX , y: e.clientY || e.touches[0].clientY});
     };
 
     canvas.addEventListener("mousedown", mousedownfn);
