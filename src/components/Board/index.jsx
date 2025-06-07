@@ -87,7 +87,7 @@ function Board() {
     const handlechange = (config) => {
       configchange(config.color, config.size);
     };
-    configchange(color,size);
+    configchange(color, size);
     socket.on("changeconfig", handlechange);
 
     return () => {
@@ -110,8 +110,14 @@ function Board() {
     };
     const mousedownfn = (e) => {
       shouddraw.current = true;
-      beginPath(e.clientX || e.touches[0].clientX   , e.clientY || e.touches[0].clientY);
-      socket.emit("beginpath", { x: e.clientX || e.touches[0].clientX  , y: e.clientY || e.touches[0].clientY });
+      beginPath(
+        e.clientX || e.touches[0].clientX,
+        e.clientY || e.touches[0].clientY
+      );
+      socket.emit("beginpath", {
+        x: e.clientX || e.touches[0].clientX,
+        y: e.clientY || e.touches[0].clientY,
+      });
 
       // socket.emit('beginpath' , {x:e.clientX , y:e.clientY});
     };
@@ -132,18 +138,23 @@ function Board() {
       if (!shouddraw.current) {
         return;
       }
-      drawPath(e.clientX ||  e.touches[0].clientX  , e.clientY || e.touches[0].clientY);
-      socket.emit("drawpath", { x: e.clientX ||  e.touches[0].clientX , y: e.clientY || e.touches[0].clientY});
+      drawPath(
+        e.clientX || e?.touches[0]?.clientX,
+        e.clientY || e?.touches[0]?.clientY
+      );
+      socket.emit("drawpath", {
+        x: e.clientX || e?.touches[0]?.clientX,
+        y: e.clientY || e?.touches[0]?.clientY,
+      });
     };
 
     canvas.addEventListener("mousedown", mousedownfn);
     canvas.addEventListener("mouseup", mouseupfn);
     canvas.addEventListener("mousemove", mousemovefn);
 
-    canvas.addEventListener('touchstart', mousedownfn)
-    canvas.addEventListener('touchmove', mousemovefn)
-    canvas.addEventListener('touchend', mouseupfn)
-
+    canvas.addEventListener("touchstart", mousedownfn);
+    canvas.addEventListener("touchmove", mousemovefn);
+    canvas.addEventListener("touchend", mouseupfn);
 
     const handleBrginPath = (path) => {
       beginPath(path.x, path.y);
@@ -166,9 +177,9 @@ function Board() {
       canvas.removeEventListener("mouseup", mouseupfn);
       canvas.removeEventListener("mousemove", mousemovefn);
 
-      canvas.removeEventListener('touchstart', mousedownfn)
-      canvas.removeEventListener('touchmove', mousemovefn)
-      canvas.removeEventListener('touchend', mouseupfn)
+      canvas.removeEventListener("touchstart", mousedownfn);
+      canvas.removeEventListener("touchmove", mousemovefn);
+      canvas.removeEventListener("touchend", mouseupfn);
 
       socket.off("beginpath", handleBrginPath);
       socket.off("drawpath", handledrawPath);
