@@ -1,6 +1,10 @@
 import React from "react";
 import styles from "./index.module.css";
-import { changeBrushSize, changecolor } from "../../Redux/Slice/Toolboxslice";
+import {
+  changeBrushSize,
+  changecolor,
+  changeBackgroundColor,
+} from "../../Redux/Slice/Toolboxslice";
 import cx from "classnames";
 import { socket } from "../../Socket";
 import { COLORS, MENU_ITEMS } from "../../constants";
@@ -17,6 +21,9 @@ const Toolbox = () => {
   const { color, size } = useSelector(
     (state) => state.toolkit[activemenuitemm]
   );
+  const backgroundColor = useSelector(
+    (state) => state.toolkit[MENU_ITEMS.BACKGROUND_COLOR]?.color
+  );
 
   const updateburshsize = (e) => {
     console.log(e.target.value);
@@ -27,6 +34,12 @@ const Toolbox = () => {
   const updatecolor = (newcolor) => {
     dispatch(changecolor({ item: activemenuitem, color: newcolor }));
     socket.emit("changeconfig", { color: newcolor, size });
+  };
+
+  const UpdateBackgroundColor = (e) => {
+    const newBackgroundColor = e.target.value;
+    dispatch(changeBackgroundColor({ color: newBackgroundColor }));
+    socket.emit("changebackgroundcolor", { color: newBackgroundColor });
   };
 
   return (
@@ -113,6 +126,14 @@ const Toolbox = () => {
               step={1}
               onChange={updateburshsize}
               value={size}
+            />
+          </div>
+          <div className={styles.toolText}>
+            Change Page Color
+            <input
+              type="color"
+              onChange={UpdateBackgroundColor}
+              value={backgroundColor || "#ffffff"}
             />
           </div>
         </div>

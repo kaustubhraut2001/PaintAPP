@@ -2,6 +2,7 @@ import { MENU_ITEMS } from "@/constants";
 import React, { useRef, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { actionitemcliick } from "../../Redux/Slice/Menuslice";
+import { BACKGROUND_COLOR } from "../../constants";
 
 import { socket } from "../../Socket";
 
@@ -15,6 +16,10 @@ function Board() {
   const { activeMenuItem, actionMenuItem } = useSelector((state) => state.menu);
 
   const { color, size } = useSelector((state) => state.toolkit[activeMenuItem]);
+  const backgroundColor = useSelector(
+    (state) => state.toolkit[BACKGROUND_COLOR.color]?.color
+  );
+  console.log(backgroundColor, "baclgroudn Colr");
 
   // useEffect(() => {
   //   if (!canvasref.current) {
@@ -193,7 +198,18 @@ function Board() {
   }, []);
   return (
     <div>
-      <canvas ref={canvasref}></canvas>
+      {console.log("Board Rendered", activeMenuItem, MENU_ITEMS.ERASER)}
+
+      <canvas
+        style={{
+          cursor:
+            toString(actionMenuItem) === toString(MENU_ITEMS.ERASER)
+              ? "url('/eraser.png') 5 5, auto"
+              : "crosshair",
+          backgroundColor: backgroundColor,
+        }}
+        ref={canvasref}
+      ></canvas>
       {console.log(color, size)}
     </div>
   );
