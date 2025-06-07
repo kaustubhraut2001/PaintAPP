@@ -31,6 +31,9 @@ const toolkitslice = createSlice({
             state[action.payload.item].color = action.payload.color
 
         },
+        changeEraserColor: (state, action) => {
+            state[MENU_ITEMS.ERASER].color = action.payload.color;
+        },
         changeBrushSize: (state, action) => {
             state[action.payload.item].size = action.payload.size
 
@@ -42,5 +45,5 @@ const toolkitslice = createSlice({
     }
 });
 
-export const { changecolor, changeBrushSize, changeBackgroundColor } = toolkitslice.actions;
+export const { changecolor, changeBrushSize, changeBackgroundColor, changeEraserColor } = toolkitslice.actions;
 export default toolkitslice.reducer;

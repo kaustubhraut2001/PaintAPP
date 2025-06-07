@@ -4,6 +4,7 @@ import {
   changeBrushSize,
   changecolor,
   changeBackgroundColor,
+  changeEraserColor,
 } from "../../Redux/Slice/Toolboxslice";
 import cx from "classnames";
 import { socket } from "../../Socket";
@@ -39,6 +40,7 @@ const Toolbox = () => {
   const UpdateBackgroundColor = (e) => {
     const newBackgroundColor = e.target.value;
     dispatch(changeBackgroundColor({ color: newBackgroundColor }));
+    dispatch(changeEraserColor({ color: newBackgroundColor }));
     socket.emit("changebackgroundcolor", { color: newBackgroundColor });
   };
 
