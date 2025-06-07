@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./index.module.css";
 import {
   changeBrushSize,
@@ -41,6 +41,16 @@ const Toolbox = () => {
     dispatch(changeBackgroundColor({ color: newBackgroundColor }));
     socket.emit("changebackgroundcolor", { color: newBackgroundColor });
   };
+
+  useEffect(() => {
+    socket.on("changebackgroundcolor", (data) => {
+      dispatch(changeBackgroundColor({ color: data.color }));
+    });
+
+    return () => {
+      socket.off("changebackgroundcolor");
+    };
+  }, [UpdateBackgroundColor, dispatch]);
 
   return (
     <div className={styles.toolboxconiainder}>
