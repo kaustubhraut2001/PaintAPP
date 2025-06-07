@@ -128,12 +128,12 @@ const Toolbox = () => {
               value={size}
             />
           </div>
-          <div className={styles.toolText}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             Change Page Color
             <input
               type="color"
               onChange={UpdateBackgroundColor}
-              value={backgroundColor || "#ffffff"}
+              value={backgroundColor}
             />
           </div>
         </div>
