@@ -42,18 +42,20 @@ function Board() {
 
       console.log(URL);
     } else if (actionMenuItem === MENU_ITEMS.UNDO) {
+      console.log("UNDO", histrypointer.current, history.current.length);
       //   if (histrypointer.current > 0) {
       //     histrypointer.current = histrypointer.current - 1;
       //   }
 
       //   const imagedata = history.current[histrypointer.current];
       //   context.putImageData(imagedata, 0, 0);
-      if (histrypointer.current > 0 && history.current.length > 0) {
+      if (histrypointer.current && history.current.length > 0) {
         histrypointer.current = histrypointer.current - 1;
         const imagedata = history.current[histrypointer.current];
         context.putImageData(imagedata, 0, 0);
       }
     } else if (actionMenuItem === MENU_ITEMS.REDO) {
+      console.log("REDO", histrypointer.current, history.current.length);
       //   if (histrypointer.current < history.current.length - 1) {
       //     histrypointer.current = histrypointer.current + 1;
       //   }
@@ -104,6 +106,10 @@ function Board() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    const blankState = context.getImageData(0, 0, canvas.width, canvas.height);
+    history.current.push(blankState);
+    histrypointer.current = 0;
+
     const beginPath = (x, y) => {
       context.beginPath();
       context.moveTo(x, y);
@@ -139,12 +145,12 @@ function Board() {
         return;
       }
       drawPath(
-        e.clientX || e?.touches[0]?.clientX,
-        e.clientY || e?.touches[0]?.clientY
+        e?.clientX || e?.touches[0]?.clientX,
+        e?.clientY || e?.touches[0]?.clientY
       );
       socket.emit("drawpath", {
-        x: e.clientX || e?.touches[0]?.clientX,
-        y: e.clientY || e?.touches[0]?.clientY,
+        x: e?.clientX || e?.touches[0]?.clientX,
+        y: e?.clientY || e?.touches[0]?.clientY,
       });
     };
 
